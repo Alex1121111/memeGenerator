@@ -2,11 +2,13 @@ import React from 'react'
 import data from './data'
 
 export default function Meme(){
-    function handleClick(){
+    const memeArray = data.memes
+    const [meme, setMeme] = React.useState('')
+    const handleClick = () => {
         console.log("I was clicked!")
-        const memeArray = data.memes
         const r = Math.floor(Math.random()* memeArray.length)
-        console.log(data.memes[r])
+        setMeme(memeArray[r])
+        console.log(meme)
         // data.map(
         //     d => console.log(d)
         // );
@@ -22,11 +24,13 @@ export default function Meme(){
             </div>
             <div className='meme-img'>
                     <div className = "meme-container">
-                    <img  className = "meme-image" src = {`${process.env.PUBLIC_URL}/images/meme1.svg`}/>
-                    </div>
+                    {
+                        (meme != '') &&
+                        <img  className = "meme-image" src = {`${process.env.PUBLIC_URL}/images/${meme.imagesrc}`}/>
+                    }</div>
                     <div className = "overlay">
-                    <h1>This is a Test String</h1>
-                    <h2>This is a Test String 2</h2>
+                        <h1>{meme.htextp}</h1>
+                        <h2>{meme.htexts}</h2>
                     </div>
             </div>
         </section>
