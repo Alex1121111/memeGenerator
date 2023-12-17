@@ -2,16 +2,21 @@ import React from 'react'
 import data from './data'
 
 export default function Meme(){
-    const memeArray = data.memes
+    const [memeArray, setMemeArray] = React.useState([]);
+    React.useEffect(
+        () => {
+            console.log("running useeffect")
+            fetch('https://api.imgflip.com/get_memes')
+                .then(res => res.json())
+                .then(response => setMemeArray(response.data.memes))
+            }
+    , [])
     const [meme, setMeme] = React.useState('')
     const handleClick = () => {
         console.log("I was clicked!")
+        console.log(memeArray[2])
         const r = Math.floor(Math.random()* memeArray.length)
         setMeme(memeArray[r])
-        console.log(meme)
-        // data.map(
-        //     d => console.log(d)
-        // );
     }
     return(
         <section className='meme-section'>
@@ -26,12 +31,12 @@ export default function Meme(){
                     <div className = "meme-container">
                     {
                         (meme != '') &&
-                        <img  className = "meme-image" src = {`${process.env.PUBLIC_URL}/images/${meme.imagesrc}`}/>
+                        <img  className = "meme-image" src = {meme.url}/>
                     }</div>
-                    <div className = "overlay">
+                    {/* <div className = "overlay">
                         <h1>{meme.htextp}</h1>
                         <h2>{meme.htexts}</h2>
-                    </div>
+                    </div> */}
             </div>
         </section>
     )
